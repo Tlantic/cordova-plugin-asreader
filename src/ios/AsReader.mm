@@ -950,13 +950,10 @@
 	uint8_t region;
 	
 	if(command.arguments.count >=1){
-		region = [[NSString stringWithFormat:@"%@", [[command arguments] objectAtIndex:0]]intValue];
-		if(![self setRegion:region]){
-			CDVPluginResult* pluginResult = nil;
-			pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"failed to set region"];
-			[pluginResult setKeepCallbackAsBool:YES];
-			[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-		}
+		CDVPluginResult* pluginResult = nil;
+		pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"failed to set region"];
+		[pluginResult setKeepCallbackAsBool:YES];
+		[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 	}else{
 		CDVPluginResult* pluginResult = nil;
 		pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"region parameter is required."];
@@ -2105,11 +2102,6 @@
 		[pluginResult setKeepCallbackAsBool:YES];
 		[self.commandDelegate sendPluginResult:pluginResult callbackId:_rfidRegionListenerCallbackId];
 	}
-}
-- (BOOL)setRegion:(uint8_t)region
-{
-	NSLog(@"%s,called",__PRETTY_FUNCTION__);
-	return [self.rfidRcp setRegion:region];
 }
 - (void)didSetRegionReceived:(uint8_t)statusCode
 {
